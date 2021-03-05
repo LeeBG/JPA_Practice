@@ -1,0 +1,12 @@
+package com.cos.myiocdi;
+
+import org.springframework.stereotype.Component;
+
+import lombok.Getter;
+
+//Component는 런타임(실행될때) IOC 컨테이너에 등록됨
+@Component
+@Getter
+public class Robot {
+	private String name = "건담";
+}

@@ -1,0 +1,7 @@
+package com.cos.myjpa.web.user.dto;
+
+public class UserJoinReqDto {
+	private String username;
+	private String password;
+	private String email;
+}

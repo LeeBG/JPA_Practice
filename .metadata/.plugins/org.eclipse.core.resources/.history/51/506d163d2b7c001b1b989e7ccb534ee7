@@ -1,0 +1,18 @@
+package com.cos.myiocdi;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+
+import lombok.Getter;
+
+//Component는 런타임(실행될때) IOC 컨테이너에 등록됨
+//@Component		//Ioc(특별한 용도가 없으면 이거 사용)
+@Getter
+//@Configuration		//
+//@Service				//
+//@Repository				//
+public class Robot {
+	private String name = "건담";
+}
