@@ -1,0 +1,52 @@
+package com.cos.myjpa.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.cos.myjpa.domain.post.Post;
+import com.cos.myjpa.domain.post.PostRepository;
+import com.cos.myjpa.domain.user.User;
+import com.cos.myjpa.web.dto.CommonRespDto;
+import com.cos.myjpa.web.post.dto.PostRespDto;
+import com.cos.myjpa.web.post.dto.PostSaveReqDto;
+
+public class PostService {
+	private PostRepository postRepository;
+	private PostSaveReqDto postSaveReqDto;
+	
+	public CommonRespDto 추가하기(User principal) {
+		Post post = postSaveReqDto.toEntity();			//post오브젝트를 만들어주는데 title content
+		post.setUser(principal);						//userId
+		Post postEntity = postRepository.save(post); //toEntity() => post오브젝트로 바꿔서 응답 <실패시 Exception탄다.>
+	
+		if(principal == null) {
+			return new CommonRespDto<>(-1,"실패",null);
+		}
+		
+//		User principal = new User();
+//		principal.setUsername("cos");
+//		principal.setPassword("1234");
+		
+		
+		
+										//연관관계 무시하고 save()
+		//실패는 Exception탄다
+		return new CommonRespDto<>(1,"성공",postEntity);
+	}
+
+	public void 한건찾기(Long id) {
+		
+	}
+
+	public void 모두찾기() {
+		
+	}
+	
+	public void 수정하기() {
+		
+	}
+	
+	public void 한건삭제하기() {
+		
+	}
+}

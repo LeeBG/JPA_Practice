@@ -16,7 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //	@Query(value = "SELECT * FROM user WHERE username = :username AND password = :password", nativeQuery = true)
 	User mLogin(String username, String password);
 	
-	// 3. 동적쿼리 라이브러리 QueryDSL - 안함
+	// 3. 동적쿼리 라이브러리 QueryDSL - 안함		//EntityManager를 이용
 	//EX) SELECT * from <??> where id = 1  <??> 영역을 동적으로 
 
 }

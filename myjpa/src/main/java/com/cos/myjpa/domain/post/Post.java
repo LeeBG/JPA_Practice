@@ -34,10 +34,12 @@ public class Post {	//자식
 	@Column(length = 60,nullable = false)		//최대 길이를 지정, nullable = 초기값 true
 	private String title;
 	@Lob										//대용량 데이터 
-	private String content;
+	private String content;						//메시지 컨버터의 잭슨이라는애가함
 	
 	//누가 적었는지???
 	//Post입장에서는 N대 N이다 (post:user)
+	
+	// 순방향 매핑 
 	@ManyToOne(fetch = FetchType.EAGER)		//연관관계 맺는 법. FK의 주인인 곳에서 적어야함.
 	@JoinColumn(name="userId")
 	private User user;

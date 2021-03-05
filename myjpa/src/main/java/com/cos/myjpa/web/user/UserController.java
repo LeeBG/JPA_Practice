@@ -1,5 +1,8 @@
 package com.cos.myjpa.web.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.myjpa.domain.user.User;
 import com.cos.myjpa.domain.user.UserRepository;
+import com.cos.myjpa.service.UserService;
 import com.cos.myjpa.web.dto.CommonRespDto;
 import com.cos.myjpa.web.user.dto.UserJoinReqDto;
 import com.cos.myjpa.web.user.dto.UserLoginReqDto;
+import com.cos.myjpa.web.user.dto.UserRespDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,34 +28,49 @@ import lombok.RequiredArgsConstructor;
 public class UserController{
 	
 	private final UserRepository userRepository;
-	private final HttpSession session; 	//DI	
-
+	private final HttpSession session; 	//DI
+	private final UserService userService;
+	
+	@GetMapping("/user")	//유저를 들고옴
+	public CommonRespDto<?> findAll(){
+		
+		
+//		List<UserRespDto> userRespDtos = new ArrayList<>();
+//		usersEntity.stream().forEach((u)->{
+//			userRespDtos.add(new UserRespDto(u));
+//		});
+		
+//		List<UserRespDto> userRespDtos = usersEntity.stream().map((u)->{
+//			return new UserRespDto(u);
+//		}).collect(Collectors.toList());
+		
+		
+		return new CommonRespDto<>(1,"성공",userService.전체찾기());
+	}
+	
+	@GetMapping("/user/{id}")	//유저를 들고옴
+	public CommonRespDto<?> findById(@PathVariable Long id){
+		return new CommonRespDto<>(1,"성공",userService.한건찾기(id));
+	}
+	
+	@GetMapping("/user/{id}/post")	//유저를 들고옴
+	public CommonRespDto<?> profile(@PathVariable Long id){
+		return new CommonRespDto<>(1,"성공",userService.프로파일(id));
+	}
+	
 	@PostMapping("/join")		//auth(인증)
 	public CommonRespDto<?> join(@RequestBody UserJoinReqDto userJoinReqDto){
-		User userEntity = userRepository.save(userJoinReqDto.toEntity());
-		return new CommonRespDto<>(1,"성공",userEntity);
+		return new CommonRespDto<>(1,"성공",userService.회원가입(userJoinReqDto));
 	}
 	
 	@PostMapping("/login")		//login(로그인)
 	public CommonRespDto<?> login(@RequestBody UserLoginReqDto userLoginReqDto){
-		User userEntity = userRepository.findByUsernameAndPassword(userLoginReqDto.getUsername(), userLoginReqDto.getPassword());
+		User userEntity = userService.로그인(userLoginReqDto);
 		if(userEntity==null) {
 			return new CommonRespDto<>(-1,"실패",null);
 		}else {
 			userEntity.setPassword(null);			//패스워드를 그대로 넘기는 것은 위험한 일
 			session.setAttribute("principal", userEntity);
-			return new CommonRespDto<>(1,"성공",userEntity);
-		}
-	}
-	
-	//샘플
-	@GetMapping("/test/user/{id}")	//유저 정보
-	public CommonRespDto<?> userInfo(@PathVariable Long id){
-		User principal = (User) session.getAttribute("principal");
-		if(principal == null) {
-			return new CommonRespDto<>(-1,"실패",null);
-		}else {
-			User userEntity = userRepository.findById(id).get();
 			return new CommonRespDto<>(1,"성공",userEntity);
 		}
 	}
