@@ -1,5 +1,0 @@
-package com.cos.myjpa.web.user.dto;
-
-public class UserJoinReqDto {
-
-}
