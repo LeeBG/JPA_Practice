@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.cos.jwtex1.config.auth.PrincipalDetails;
 import com.cos.jwtex1.web.dto.LoginReqDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -51,6 +52,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter{	//토�
 			Authentication authResult) throws IOException, ServletException {
 		//JWT토큰 만들어서 응답
 		System.out.println("로그인 완료되어서 세션 만들어짐. 이제 JWT토큰 만들어서 response.header에 응답할 차례");
+		PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
 	}
 	
 	

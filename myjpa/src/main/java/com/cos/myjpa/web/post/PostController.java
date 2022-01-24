@@ -25,11 +25,17 @@ import lombok.RequiredArgsConstructor;
  *
  */
 @RequiredArgsConstructor
-@RestController
+@RestController				//데이터를 리턴 받음
 public class PostController {
 	private final PostService postService;
 	private final HttpSession session;
 	private final EntityManager em;
+	
+	@GetMapping("/test")
+	public String test() {
+		return "test";
+	}
+	
 	//인증만 필요 
 	@PostMapping("/post")
 	public CommonRespDto<?> save(@RequestBody PostSaveReqDto postSaveReqDto) { // title, content
